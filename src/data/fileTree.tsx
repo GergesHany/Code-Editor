@@ -1,7 +1,7 @@
 import { IFile } from "../interfaces/index";
 
 export const fileTree: IFile = {
-    name: "VS Code Clone",
+    name: "src",
     isFolder: true,
     children: [
         {
@@ -9,7 +9,7 @@ export const fileTree: IFile = {
             isFolder: true,
             children: [
                 { 
-                    name: "@types", 
+                    name: "public", 
                     isFolder: true,
                     children: [
                         { name: "index.tsx", isFolder: false }
