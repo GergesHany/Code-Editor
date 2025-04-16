@@ -12,7 +12,8 @@ export const fileTree: IFile = {
                     name: "public", 
                     isFolder: true,
                     children: [
-                        { name: "index.tsx", isFolder: false }
+                        { name: "index.tsx", isFolder: false },
+                        { name: "index.txt", isFolder: false }
                     ] 
                 },
             ]

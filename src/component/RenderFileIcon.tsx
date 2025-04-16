@@ -1,3 +1,4 @@
+import FileIcon from "./SVG/file";
 import IconImg from "./SVG/iconImg";
 
 interface IProps {
@@ -65,12 +66,19 @@ const RenderFileIcon = ({ filename, isFolder, isOpen }: IProps) => {
     const extension = filename.split('.').pop()?.toLowerCase() || '';
     
     // Return the mapped icon name or the extension itself if not found
-    return FILE_ICON_MAPPING.get(extension) || extension;
+    // return FILE_ICON_MAPPING.get(extension) || extension;
+    if (!FILE_ICON_MAPPING.has(extension)) {
+      return null;
+    }
+    return FILE_ICON_MAPPING.get(extension);
   };
 
   const iconKey = getIconKey();
-  const iconPath = `/public/icons/${iconKey}.svg`;
+  if (!iconKey) {
+    return <FileIcon />
+  }
 
+  const iconPath = `/public/icons/${iconKey}.svg`;
   return <IconImg src={iconPath} />;
 };
 
