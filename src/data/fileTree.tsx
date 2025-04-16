@@ -12,7 +12,7 @@ export const fileTree: IFile = {
                     name: "@types", 
                     isFolder: true,
                     children: [
-                        { name: "typescript", isFolder: false }
+                        { name: "index.tsx", isFolder: false }
                     ] 
                 },
             ]
