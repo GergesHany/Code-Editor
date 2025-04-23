@@ -42,6 +42,7 @@ const OpenedFileBarTab = ({file}: IProps) => {
       }));
     }else{
       // If no files are opened, set the clicked file to default values
+      dispatch(setOpenedFiles([]));
       dispatch(setClikedFile({ activeTabId: "", filename: "", fileContent: "", }));
     }
   }
