@@ -12,14 +12,17 @@ interface IProps {
 
 const OpenedFileBarTab = ({file}: IProps) => {
 
-  const { activeTabId } = useSelector((state: RootState) => state.tree);
+  const { 
+    clickedFile: {activeTabId},
+   } = useSelector((state: RootState) => state.tree);
 
   const dispatch = useDispatch();
   const onClick = () => {
-    const {name, content} = file;
+    const {name, content, id} = file;
     dispatch(setClikedFile({
+      activeTabId: id,
       filename: name,
-      fileContent: content,
+      fileContent: content || "",
     }));
   }
 
