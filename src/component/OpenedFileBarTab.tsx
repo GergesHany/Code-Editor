@@ -6,13 +6,13 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { RootState } from "../app/store";
 import { setOpenedFiles } from "../app/features/fileTreeSlice";
+import { setTapIdToRemove } from "../app/features/fileTreeSlice";
 
 interface IProps {
   file: IFile;
 }
 
 const OpenedFileBarTab = ({file}: IProps) => {
-
   const { 
     openedFiles,
     clickedFile: {activeTabId},
@@ -48,7 +48,13 @@ const OpenedFileBarTab = ({file}: IProps) => {
   }
 
   return (
-    <div className={`flex items-center p-2 ${file.id === activeTabId ? "border-t-2 border-purple-500" : "border-t-2 border-transparent"}`} onClick={onClick}>
+    <div className={`flex items-center p-2 ${file.id === activeTabId ? "border-t-2 border-purple-500" : "border-t-2 border-transparent"}`} 
+      onClick={onClick}
+      onContextMenu={(e) => {
+        e.preventDefault()
+        dispatch(setTapIdToRemove(file.id))
+      }}
+    >
       
       <RenderFileIcon filename={file.name} />
         <span className="cursor-pointer duration-300 flex justify-center items-center w-fit mx-2 p-1 rounded-md">
