@@ -18,7 +18,8 @@ const codeStyle = {
     fontSize: 14,
     backgroundColor: 'transparent',
     minHeight: 'calc(100vh - 35px)',
-    color: '#fff'
+    color: '#fff',
+    lineHeight: '1.5',
 };
 
 const SyntaxHighlighter = ({content}: IProps) => {
@@ -33,15 +34,34 @@ const SyntaxHighlighter = ({content}: IProps) => {
         }));
     };
 
+
+    const renderLineNumbers = () => {
+        const lines = (content || '').split('\n');
+        return (
+            <div className="absolute left-0 top-0 bottom-0 w-14 py-2.5 text-right text-gray-500 border-r border-slate-700 pr-2">
+                {lines.map((_, index) => (
+                    <div
+                        key={index}
+                    >
+                        {index + 1}
+                    </div>
+                ))}
+            </div>
+        );
+    };
+
     return (
-        <Editor
-            value={content || ''}
-            onValueChange={handleContentChange}
-            highlight={code => highlight(code, languages.tsx, 'tsx')}
-            padding={10}
-            style={codeStyle}
-            className="w-full"
-        />
+        <div className="relative pl-14">
+            {renderLineNumbers()}
+            <Editor
+                value={content || ''}
+                onValueChange={handleContentChange}
+                highlight={code => highlight(code, languages.tsx, 'tsx')}
+                padding={10}
+                style={codeStyle}
+                className="w-full"
+            />
+        </div>
     );
 };
 
