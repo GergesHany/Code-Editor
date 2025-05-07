@@ -17,7 +17,6 @@ const ContextMenu = ({ position, setShowMenu}: IProps) => {
   
   const menuRef = useRef<HTMLDivElement>(null);
 
-
   const { 
     openedFiles,
     tapIdToRemove,

@@ -12,13 +12,17 @@ function App() {
 
   return (
     <div >
-      <div className="flex h-screen">
+      <div className="flex h-screen w-screen">
         <ResizablePanel 
           LeftPanel={<div className="w-64 p-2"> 
             <RecursiveComponent fileTree={fileTree} />
             </div> 
           } 
-          RightPanel={openedFiles.length > 0 ? <Preview /> : <WelcomeTap />} 
+          RightPanel={
+            <div className="h-full rounded-3xl  mr-2">
+              {openedFiles.length ? <Preview /> : <WelcomeTap />}
+            </div>
+          } 
           ShowLeftPanel={true}
         />
       </div>
