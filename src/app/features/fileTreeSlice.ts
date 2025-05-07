@@ -32,6 +32,13 @@ export const fileTreeSlice = createSlice({
        },
        setClikedFile: (state, action: PayloadAction<IClickedFile>) => {
             state.clickedFile = action.payload;
+            // Update the content in openedFiles array
+            if (action.payload.activeTabId) {
+                const fileIndex = state.openedFiles.findIndex(file => file.id === action.payload.activeTabId);
+                if (fileIndex !== -1) {
+                    state.openedFiles[fileIndex].content = action.payload.fileContent;
+                }
+            }
        },
        setTapIdToRemove: (state, action: PayloadAction<string | null>) => {
            state.tapIdToRemove = action.payload;
