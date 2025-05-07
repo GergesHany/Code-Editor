@@ -11,15 +11,15 @@ function App() {
   const {openedFiles} = useSelector((state: RootState) => state.tree)
 
   return (
-    <div >
-      <div className="flex h-screen w-screen">
+    <div className="bg-black">
+    <div className="h-screen w-screen overflow-hidden bg-gradient-to-br from-slate-1000 via-blue-950 to-indigo-950">
         <ResizablePanel 
-          LeftPanel={<div className="w-64 p-2"> 
+          LeftPanel={<div className="w-64 p-2 rounded-2xl"> 
             <RecursiveComponent fileTree={fileTree} />
             </div> 
           } 
           RightPanel={
-            <div className="h-full rounded-3xl  mr-2">
+            <div className="h-full">
               {openedFiles.length ? <Preview /> : <WelcomeTap />}
             </div>
           } 
@@ -31,3 +31,4 @@ function App() {
 }
 
 export default App
+

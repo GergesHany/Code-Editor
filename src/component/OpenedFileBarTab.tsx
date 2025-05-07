@@ -48,7 +48,7 @@ const OpenedFileBarTab = ({file}: IProps) => {
   }
 
   return (
-    <div className={`flex items-center p-2 ${file.id === activeTabId ? "border-t-2 border-purple-500" : "border-t-2 border-transparent"}`} 
+    <div className={`flex items-center p-2 ${file.id === activeTabId ? "border-t-2 border-b-blue-300" : "border-t-2 border-transparent"}`} 
       onClick={onClick}
       onContextMenu={(e) => {
         e.preventDefault()
