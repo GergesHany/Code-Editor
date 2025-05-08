@@ -44,7 +44,7 @@ const RenderFileIcon = ({ filename, isFolder, isOpen }: IProps) => {
     return <FileIcon />
   }
 
-  const iconPath = `/public/icons/${iconKey}.svg`;
+  const iconPath = `/icons/${iconKey}.svg`;
   return <IconImg src={iconPath} />;
 };
 
