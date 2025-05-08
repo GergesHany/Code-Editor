@@ -14,7 +14,7 @@ function App() {
     <div className="bg-black">
     <div className="h-screen w-screen overflow-hidden bg-gradient-to-br from-slate-1000 via-blue-950 to-indigo-950">
         <ResizablePanel 
-          LeftPanel={<div className="w-64 p-2 rounded-2xl"> 
+          LeftPanel={<div className="w-64 pt-2"> 
             <RecursiveComponent fileTree={fileTree} />
             </div> 
           } 

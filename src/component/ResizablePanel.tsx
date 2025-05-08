@@ -22,7 +22,7 @@ const ResizablePanel = ({defaultLayout = [33, 67], LeftPanel, RightPanel, ShowLe
                     <PanelResizeHandle className="w-2" />
                 </>
             }
-            <Panel defaultSize={defaultLayout[1]} minSize={40}>{RightPanel}</Panel>
+            <Panel className="border-l-5 border-black" defaultSize={defaultLayout[1]} minSize={40}>{RightPanel}</Panel>
         </PanelGroup>
     );    
 };
