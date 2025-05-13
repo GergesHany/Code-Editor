@@ -5,3 +5,15 @@ export interface IFile {
   children?: IFile[];
   content?: string;
 }
+
+export interface MessageType {
+  id: string;
+  content: string[];
+  sender: 'user' | 'model'
+}
+
+export interface Choice {
+  message: {
+      content: string;
+  };
+}

@@ -10,17 +10,22 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@google/genai": "^0.13.0",
+    "@google/generative-ai": "^0.24.1",
     "@monaco-editor/react": "^4.7.0",
     "@reduxjs/toolkit": "^2.6.1",
     "@tailwindcss/vite": "^4.1.4",
+    "axios": "^1.9.0",
     "highlight.js": "^11.11.1",
+    "openai": "^4.98.0",
     "prism-react-renderer": "^2.4.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-markdown": "^10.1.0",
     "react-redux": "^9.2.0",
     "react-resizable-panels": "^2.1.8",
     "react-simple-code-editor": "^0.14.1",
-    "react-syntax-highlighter": "^15.5.0",
+    "react-syntax-highlighter": "^15.6.1",
     "tailwindcss": "^4.1.4",
     "uuid": "^11.1.0"
   },

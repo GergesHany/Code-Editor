@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { RootState } from '../app/store';
 import OpenedFileBarTab from './OpenedFileBarTab';
-import SyntaxHighlighter from './SyntaxHighlighter';
+import SyntaxHighlighter from './SyntaxHighlighterEditor';
 import { useState } from 'react';
 import ContextMenu from './ui/ContextMenu';
 
