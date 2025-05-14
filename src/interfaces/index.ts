@@ -10,6 +10,7 @@ export interface MessageType {
   id: string;
   content: string[];
   sender: 'user' | 'model'
+  fileContent?: string;
 }
 
 export interface Choice {

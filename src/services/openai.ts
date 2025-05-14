@@ -29,8 +29,6 @@ export async function fetchCompletion(prompt: MessageType[]) {
         .split('\n')
         .filter(line => line.trim() !== '')
         .join('\n');
-    
-        console.log("Gemini AI response:", cleanedResponse);
 
     return cleanedResponse;
 }
