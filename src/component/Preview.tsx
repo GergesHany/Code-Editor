@@ -27,7 +27,7 @@ const Preview = () => {
 
     const [isChatOpen, setIsChatOpen] = useState(false);
     const [ChatMessage, setChatMessage] = useState<string>("");
-    const [chatSize, setchatSize] = useState<string>("w-[450px] h-[650px]");
+    const [chatSize, setchatSize] = useState<string>("w-full md:w-[450px] h-[70vh] md:h-[650px]");
     const [selectedMode, setSelectedMode] = useState<string>("Ask");
     const [isLoading, setIsLoading] = useState(false)
 
@@ -103,7 +103,7 @@ const Preview = () => {
     }
 
     const handleZoomToggle = () => {
-        setchatSize(chatSize === "w-[450px] h-[650px]" ? "w-[700px] h-[850px]" : "w-[450px] h-[650px]");
+        setchatSize(chatSize === "w-full md:w-[450px] h-[70vh] md:h-[650px]" ? "w-full md:w-[700px] h-[85vh] md:h-[850px]" : "w-full md:w-[450px] h-[70vh] md:h-[650px]");
     }
 
     // Ask the AI to answer the question
@@ -215,8 +215,8 @@ const Preview = () => {
             {/* Show modified code with Accept/Reject buttons */}
             
             {pendingChanges.isVisible && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-40">
-                    <div className="bg-gray-900 rounded-lg w-3/4 max-h-[80vh] overflow-hidden flex flex-col border border-indigo-700">
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-40 p-4">
+                    <div className="bg-gray-900 rounded-lg w-full max-w-4xl max-h-[80vh] overflow-hidden flex flex-col border border-indigo-700">
                         <div className="p-4 border-b border-gray-700 flex justify-between items-center">
                             <h3 className="text-white text-lg font-semibold">Modified Code</h3>
                         </div>
@@ -230,13 +230,13 @@ const Preview = () => {
             )}
             
             {!isChatOpen && <div onClick={handleOnClick}>
-                <img src={AIPath} alt="AI" className="absolute bottom-5 mr-5 right-0 w-15 h-15 cursor-pointer" />              
+                <img src={AIPath} alt="AI" className="fixed bottom-5 right-5 w-12 h-12 cursor-pointer z-40" />              
             </div>}
             
             {isChatOpen && (
-                <div className="fixed top-0 right-0 h-full flex items-center z-50">
+                <div className="fixed top-0 right-0 h-full w-full md:w-auto flex items-center z-50">
                     <div 
-                        className={`${chatSize} rounded-lg overflow-hidden relative shadow-2xl mr-4 bg-gradient-to-br from-slate-900 via-blue-950 to-indigo-950 border border-indigo-700`}
+                        className={`${chatSize} rounded-lg overflow-hidden relative shadow-2xl mx-2 md:mr-4 md:ml-0 bg-gradient-to-br from-slate-900 via-blue-950 to-indigo-950 border border-indigo-700`}
                     >
                         <div className="absolute inset-0 bg-opacity-20">
                             <div className="h-full flex flex-col">
@@ -244,21 +244,17 @@ const Preview = () => {
                                 <div className="flex justify-between items-center p-3 border-b border-gray-700">
                                     <h2 className="text-white text-lg font-semibold">AI Chat</h2>
                                     
-
                                     <div className="flex gap-2">
-                                        <button onClick={handleClearMessages} className="text-white hover:text-gray-300"> 
-                                            <img src={NewIcon} alt="AI" className="w-7 h-7" />
+                                        <button onClick={handleClearMessages} className="text-white hover:text-gray-300" aria-label="New chat"> 
+                                            <img src={NewIcon} alt="New chat" className="w-6 h-6 sm:w-7 sm:h-7" />
                                         </button>
 
-
-                                        <button onClick={handleZoomToggle} className="text-white hover:text-gray-300"> 
-                                            <img src={ZoomInOut} alt="AI" className="w-6 h-6" />
+                                        <button onClick={handleZoomToggle} className="text-white hover:text-gray-300" aria-label="Toggle size"> 
+                                            <img src={ZoomInOut} alt="Zoom" className="w-5 h-5 sm:w-6 sm:h-6" />
                                         </button>
 
-          
-                                        <button onClick={handleOnClick} className="text-white hover:text-gray-300 text-lg"> ✕ </button>
+                                        <button onClick={handleOnClick} className="text-white hover:text-gray-300 text-lg" aria-label="Close chat"> ✕ </button>
                                     </div>
-
                                 </div>
                                 
                                 {/* show messages and */}
@@ -295,7 +291,7 @@ const Preview = () => {
                                 )}
 
                                 <div className="p-3 border-t border-gray-700">
-                                    <div className="flex gap-2">
+                                    <div className="flex flex-col sm:flex-row gap-2">
                                         <input 
                                             type="text"
                                             placeholder="Type your message..."
@@ -304,19 +300,20 @@ const Preview = () => {
                                             className="flex-1 p-2 rounded-lg bg-black bg-opacity-50 text-white border border-gray-600 focus:outline-none focus:border-blue-500 text-sm"
                                         />
                                         
-                                        <select
-                                            value={selectedMode}
-                                            onChange={(e) => setSelectedMode(e.target.value)}
-                                            className="px-3 py-2 bg-gray-700 text-white rounded-lg border border-gray-600 focus:outline-none focus:border-blue-500 text-sm"
-                                        >
-                                            <option value="Ask">Ask</option>
-                                            <option value="Edit">Edit</option>
-                                        </select>
+                                        <div className="flex gap-2">
+                                            <select
+                                                value={selectedMode}
+                                                onChange={(e) => setSelectedMode(e.target.value)}
+                                                className="px-3 py-2 bg-gray-700 text-white rounded-lg border border-gray-600 focus:outline-none focus:border-blue-500 text-sm"
+                                            >
+                                                <option value="Ask">Ask</option>
+                                                <option value="Edit">Edit</option>
+                                            </select>
 
-                                        <button className="px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm" onClick={handleSendMessage} disabled={isLoading} >
-                                                Send
-                                        </button>
-
+                                            <button className="px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm" onClick={handleSendMessage} disabled={isLoading} >
+                                                    Send
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
