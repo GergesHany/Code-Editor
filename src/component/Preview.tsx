@@ -213,6 +213,7 @@ const Preview = () => {
             <SyntaxHighlighter content={clickedFile.fileContent} />
             
             {/* Show modified code with Accept/Reject buttons */}
+            
             {pendingChanges.isVisible && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-40">
                     <div className="bg-gray-900 rounded-lg w-3/4 max-h-[80vh] overflow-hidden flex flex-col border border-indigo-700">
@@ -283,16 +284,11 @@ const Preview = () => {
                                 {/* show accept/reject buttons */}
                                 {pendingChanges.isVisible && (
                                     <div className="ml-2 mb-2 flex gap-3">
-                                        <button 
-                                            onClick={handleAcceptChanges} 
-                                            className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition"
-                                        >
+                                        <button className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition" onClick={handleAcceptChanges}>
                                             Accept
                                         </button>
-                                        <button 
-                                            onClick={handleRejectChanges} 
-                                            className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition"
-                                        >
+
+                                        <button className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition" onClick={handleRejectChanges} >
                                             Reject
                                         </button>
                                     </div>
@@ -317,11 +313,7 @@ const Preview = () => {
                                             <option value="Edit">Edit</option>
                                         </select>
 
-                                        <button
-                                            className="px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
-                                            onClick={handleSendMessage}
-                                            disabled={isLoading}
-                                            >
+                                        <button className="px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm" onClick={handleSendMessage} disabled={isLoading} >
                                                 Send
                                         </button>
 
