@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IFile } from '../../interfaces';
 import { v4 as uuid } from 'uuid';
+import { toast } from 'react-hot-toast';
 
 interface IClickedFile {
     activeTabId: string | null;
@@ -60,6 +61,29 @@ const addItemToFolder = (tree: IFile, folderId: string, newItem: IFile): IFile =
     return tree;
 };
 
+// Helper function to find a folder by id
+const findFolderById = (tree: IFile, folderId: string): IFile | null => {
+    if (tree.id === folderId && tree.isFolder) {
+        return tree;
+    }
+
+    if (tree.children && tree.isFolder) {
+        for (const child of tree.children) {
+            const found = findFolderById(child, folderId);
+            if (found) return found;
+        }
+    }
+
+    return null;
+};
+
+// check if the file name exists in the specific folder 
+const fileFolderNameExists = (fileName: string, folder: IFile): boolean => {
+    if (!folder.isFolder || !folder.children) return false;
+    
+    return folder.name == fileName || folder.children.some(child => child.name === fileName);
+};
+
 export const fileTreeSlice = createSlice({
     name: "fileTree",
     initialState,
@@ -92,6 +116,16 @@ export const fileTreeSlice = createSlice({
        },
        createFile: (state, action: PayloadAction<{ folderId: string, fileName: string, content?: string }>) => {
            const { folderId, fileName } = action.payload;
+           
+           // Find the target folder
+           const targetFolder = findFolderById(state.fileTree, folderId);
+           
+           // Check if the folder exists and if the file name already exists in this folder
+           if (targetFolder && fileFolderNameExists(fileName, targetFolder)) {
+               toast.error("File name already exists in this folder");
+               return;
+           } 
+
            const newFile: IFile = {
                id: uuid(),
                name: fileName,
@@ -103,6 +137,16 @@ export const fileTreeSlice = createSlice({
        },
        createFolder: (state, action: PayloadAction<{ folderId: string, folderName: string }>) => {
            const { folderId, folderName } = action.payload;
+           
+           // Find the target folder
+           const targetFolder = findFolderById(state.fileTree, folderId);
+           
+           // Check if the folder exists and if the folder name already exists in this folder
+           if (targetFolder && fileFolderNameExists(folderName, targetFolder)) {
+               toast.error("Folder name already exists in this folder");
+               return;
+           }
+           
            const newFolder: IFile = {
                id: uuid(),
                name: folderName,
@@ -124,4 +168,5 @@ export const {
     showContextMenu,
     hideContextMenu
 } = fileTreeSlice.actions;
+
 export default fileTreeSlice.reducer;

@@ -6,7 +6,7 @@ const store = configureStore({
   reducer: {
     tree: fileTreeSlice.reducer,
     chat: chatMessageSlice.reducer,
-  },
+  }
 })
 
 export type RootState = ReturnType<typeof store.getState>
