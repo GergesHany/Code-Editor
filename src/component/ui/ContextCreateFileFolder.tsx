@@ -59,20 +59,18 @@ const ContextCreateFileFolder = ({ position, folderId }: IProps) => {
     dispatch(hideContextMenu());
   };
 
-  console.log("Rendering ContextCreateFileFolder, showNameInput:", showNameInput);
-
   return (
     <div>
       {!showNameInput ? (
         <div >
-          <ul ref={createRef} className="bg-white text-black w-fit px-7 py-2 rounded-md z-50" style={{
+          <ul ref={createRef} className="bg-gradient-to-br from-slate-900 via-blue-950 to-indigo-950 border border-indigo-700 text-white w-fit px-7 py-2 rounded-md z-50" style={{
               position: "absolute",
               top: position.y,
               left: position.x,
           }}>
 
-          <li onClick={() => { setIsFile(true); setShowNameInput(true);}} className="cursor-pointer hover:bg-gray-200 p-1"> Create File </li>
-          <li onClick={() => {  setIsFile(false); setShowNameInput(true);}} className="cursor-pointer hover:bg-gray-200 p-1"> Create Folder </li>
+          <li onClick={() => { setIsFile(true); setShowNameInput(true);}} className="cursor-pointer hover:bg-blue-900 p-1 rounded"> Create File </li>
+          <li onClick={() => {  setIsFile(false); setShowNameInput(true);}} className="cursor-pointer hover:bg-blue-900 p-1 rounded"> Create Folder </li>
 
           </ul>  
         </div>
