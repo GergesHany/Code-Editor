@@ -15,7 +15,7 @@ interface IProps {
 
 const ContextMenu = ({ position, setShowMenu}: IProps) => {
   
-  const menuRef = useRef<HTMLDivElement>(null);
+  const menuRef = useRef<HTMLUListElement>(null);
 
   const { 
     openedFiles,
@@ -56,18 +56,17 @@ const ContextMenu = ({ position, setShowMenu}: IProps) => {
   }, [setShowMenu]);
 
   return (
-    <div ref={menuRef}>
-
-      <ul className="bg-white text-black w-fit px-7 py-2 rounded-md" style={{
+    <div >
+      <ul ref={menuRef} className="bg-gradient-to-br from-slate-900 via-blue-950 to-indigo-950 border border-indigo-700 text-white w-40 px-7 py-2 rounded-md z-50" style={{
           position: "absolute",
           top: position.y,
           left: position.x,
-      }}
-        >
-          <li onClick={CloseOne} className="cursor-pointer"> Close </li>
-          <li onClick={CloseAll} className="cursor-pointer"> Close All </li>
-      </ul>
+      }}>
 
+      <li onClick={ CloseOne } className="cursor-pointer hover:bg-blue-900 p-1 rounded"> Close </li>
+      <li onClick={ CloseAll } className="cursor-pointer hover:bg-blue-900 p-1 rounded"> Close All </li>
+
+      </ul>  
     </div>
   );
 };
