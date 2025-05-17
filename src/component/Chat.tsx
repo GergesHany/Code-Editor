@@ -133,8 +133,8 @@ const Chat = ({ isChatOpen, onClose }: ChatProps) => {
     );
   };
 
-  // Edit the file content
-  const HandleEdit = async () => {
+  // Agent the file content
+  const HandleAgent = async () => {
     const newMessage: MessageType = {
       id: Date.now().toString(),
       content: [ChatMessage],
@@ -148,7 +148,7 @@ const Chat = ({ isChatOpen, onClose }: ChatProps) => {
     const updatedMessage = {
       ...newMessage,
       content: [
-        newMessage.content[0] + " " + "Please make the edit at this code and return the code only, no other text or comments.",
+        newMessage.content[0] + " " + "Please make the Agent at this code and return the code only, no other text or comments.",
       ],
     };
 
@@ -161,6 +161,8 @@ const Chat = ({ isChatOpen, onClose }: ChatProps) => {
     const codeBlockRegex = /```(\w+)?\n([\s\S]*?)```/g;
     const code = codeBlockRegex.exec(responses);
 
+    let contentMessage = "I've prepared code changes. Please review and click Accept or Reject.";
+
     if (code) {
       // Save the original and modified code in state
       setPendingChanges({
@@ -168,28 +170,20 @@ const Chat = ({ isChatOpen, onClose }: ChatProps) => {
         modified: code[2],
         isVisible: true,
       });
-
-      // Add a message to tell the user to review changes
-      dispatch(
-        addMessage({
-          id: Date.now().toString(),
-          content: [
-            "I've prepared code changes. Please review and click Accept or Reject.",
-          ],
-          sender: "model",
-        })
-      );
     } else {
-      dispatch(
-        addMessage({
-          id: Date.now().toString(),
-          content: [
-            "Sorry, I couldn't generate proper code. Please try again with more details.",
-          ],
-          sender: "model",
-        })
-      );
+ 
+      contentMessage = "Sorry, I couldn't generate proper code. Please try again with more details.";
     }
+
+    dispatch(
+      addMessage({
+        id: Date.now().toString(),
+        content: [
+          contentMessage
+        ],
+        sender: "model",
+      })
+    );
   };
 
   const handleSendMessage = async () => {
@@ -198,8 +192,8 @@ const Chat = ({ isChatOpen, onClose }: ChatProps) => {
     setIsLoading(true);
     if (selectedMode === "Ask") {
       HandleAsk();
-    } else {
-      HandleEdit();
+    } else if (selectedMode === "Agent") {
+      HandleAgent();
     }
   };
 
@@ -228,8 +222,8 @@ const Chat = ({ isChatOpen, onClose }: ChatProps) => {
             </div>
 
             <div className="p-3 border-t border-gray-700 flex justify-end gap-3">
-              <button className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition" onClick={handleAcceptChanges}> Accept </button>
-              <button className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition" onClick={handleRejectChanges}> Reject </button>
+              <button className="px-4 py-2" onClick={handleAcceptChanges}> Accept </button>
+              <button className="px-4 py-2" onClick={handleRejectChanges}> Reject </button>
             </div>
 
           </div>
@@ -295,14 +289,10 @@ const Chat = ({ isChatOpen, onClose }: ChatProps) => {
                       className="px-3 py-2 bg-gray-700 text-white rounded-lg border border-gray-600 focus:outline-none focus:border-blue-500 text-sm"
                     >
                       <option value="Ask">Ask</option>
-                      <option value="Edit">Edit</option>
+                      <option value="Agent">Agent</option>
                     </select>
 
-                    <button
-                      className="px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
-                      onClick={handleSendMessage}
-                      disabled={isLoading}
-                    >
+                    <button className="px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm" onClick={handleSendMessage} disabled={isLoading} >
                       Send
                     </button>
                   </div>
