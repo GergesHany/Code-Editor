@@ -7,6 +7,7 @@ import { fetchCompletion } from "../services/openai";
 import { setClikedFile } from "../app/features/fileTreeSlice";
 import ShowChatMessage from "./ShowChatMessage";
 import SyntaxHighlighter from "./SyntaxHighlighterEditor";
+import toast from "react-hot-toast";
 
 // -------------------------- PHOTOS --------------------------
 const ZoomInOut = "utils/zoom-out.png";
@@ -148,7 +149,7 @@ const Chat = ({ isChatOpen, onClose }: ChatProps) => {
     const updatedMessage = {
       ...newMessage,
       content: [
-        newMessage.content[0] + " " + "Please make the Agent at this code and return the code only, no other text or comments.",
+        newMessage.content[0] + " \n" + "Please make the edit on this code and return the code only, no other text or comments.",
       ],
     };
 
@@ -171,7 +172,6 @@ const Chat = ({ isChatOpen, onClose }: ChatProps) => {
         isVisible: true,
       });
     } else {
- 
       contentMessage = "Sorry, I couldn't generate proper code. Please try again with more details.";
     }
 
@@ -194,6 +194,8 @@ const Chat = ({ isChatOpen, onClose }: ChatProps) => {
       HandleAsk();
     } else if (selectedMode === "Agent") {
       HandleAgent();
+    }else{
+      toast.error("Please select a correct mode.");
     }
   };
 
