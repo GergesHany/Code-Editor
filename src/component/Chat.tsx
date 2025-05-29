@@ -190,12 +190,24 @@ const Chat = ({ isChatOpen, onClose }: ChatProps) => {
     if (ChatMessage.trim() === "") return;
 
     setIsLoading(true);
-    if (selectedMode === "Ask") {
-      HandleAsk();
-    } else if (selectedMode === "Agent") {
-      HandleAgent();
-    }else{
-      toast.error("Please select a correct mode.");
+    try {
+      if (selectedMode === "Ask") {
+        await HandleAsk();
+      } else if (selectedMode === "Agent") {
+        await HandleAgent();
+      } else {
+        toast.error("Please select a correct mode.");
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        if (error.message.includes('timed out')) {
+          toast.error("The request took too long to complete. Please try again.");
+        } else {
+          toast.error("An error occurred while processing your request.");
+        }
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 

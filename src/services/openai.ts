@@ -10,25 +10,43 @@ if (!API_KEY) {
 // Initialize the Gemini AI client
 const genAI = new GoogleGenAI({ apiKey: API_KEY });
 
+// Default timeout in milliseconds (30 seconds)
+const DEFAULT_TIMEOUT = 30000;
 
-export async function fetchCompletion(prompt: MessageType[]) {
-    // Format the messages correctly for the Gemini API
-    const formattedMessages = prompt.map(msg => ({
-        role: msg.sender === 'user' ? 'user' : 'model', 
-        parts: [{ text: Array.isArray(msg.content) ? msg.content.join(' ') : msg.content }]
-    }));
+export async function fetchCompletion(prompt: MessageType[], timeoutMs: number = DEFAULT_TIMEOUT) {
+    // Create an AbortController for the timeout
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
 
-    const response = await genAI.models.generateContent({
-        model: "gemini-2.0-flash",
-        contents: formattedMessages,
-     });
+    try {
+        // Format the messages correctly for the Gemini API
+        const formattedMessages = prompt.map(msg => ({
+            role: msg.sender === 'user' ? 'user' : 'model', 
+            parts: [{ text: Array.isArray(msg.content) ? msg.content.join(' ') : msg.content }]
+        }));
 
-    // Clean up the response text by removing empty lines
-    const responseText = response.text || '';
-    const cleanedResponse = responseText
-        .split('\n')
-        .filter(line => line.trim() !== '')
-        .join('\n');
+        const response = await genAI.models.generateContent({
+            model: "gemini-2.0-flash",
+            contents: formattedMessages,
+        });
 
-    return cleanedResponse;
+        // Clean up the response text by removing empty lines
+        const responseText = response.text || '';
+        const cleanedResponse = responseText
+            .split('\n')
+            .filter(line => line.trim() !== '')
+            .join('\n');
+
+        return cleanedResponse;
+    } catch (error) {
+        if (error instanceof Error) {
+            if (error.name === 'AbortError') {
+                throw new Error(`Request timed out after ${timeoutMs}ms`);
+            }
+            throw error;
+        }
+        throw new Error('An unknown error occurred');
+    } finally {
+        clearTimeout(timeoutId);
+    }
 }
